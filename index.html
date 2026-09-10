@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b5ed7">
+  <meta name="description" content="Dashboard SPPG MBG - Menu, penerima manfaat, distribusi dan gizi">
+  <title>SPPG MBG • Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">MBG</div>
+        <div>
+          <strong>SPPG MBG</strong>
+          <span>Dashboard Operasional</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-section="dashboard">
+          <span class="icon">⌂</span><span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-section="menu">
+          <span class="icon">🍱</span><span>Menu Harian</span>
+        </button>
+        <button class="nav-item" data-section="schools">
+          <span class="icon">🏫</span><span>Sekolah & Penerima</span>
+        </button>
+        <button class="nav-item" data-section="distribution">
+          <span class="icon">🚚</span><span>Distribusi</span>
+        </button>
+        <button class="nav-item" data-section="nutrition">
+          <span class="icon">🥗</span><span>Informasi Gizi</span>
+        </button>
+        <button class="nav-item" data-section="waste">
+          <span class="icon">♻</span><span>Waste Monitoring</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="mini-card">
+          <span class="status-dot"></span>
+          <div>
+            <b>Sistem aktif</b>
+            <small>Data demo lokal</small>
+          </div>
+        </div>
+        <button class="nav-item" data-section="settings">
+          <span class="icon">⚙</span><span>Pengaturan</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Buka menu">☰</button>
+        <div class="top-title">
+          <span>SPPG</span>
+          <strong>Dashboard MBG</strong>
+        </div>
+        <div class="top-actions">
+          <button class="date-chip" id="todayChip">10 Sep 2026</button>
+          <button class="avatar" title="Profil">AA</button>
+        </div>
+      </header>
+
+      <div class="content">
+        <section id="dashboard" class="section active-section">
+          <div class="hero">
+            <div>
+              <span class="eyebrow">PROGRAM MAKAN BERGIZI GRATIS</span>
+              <h1>Selamat datang di Dashboard SPPG 👋</h1>
+              <p>Pantau menu, penerima manfaat, distribusi, dan indikator gizi dalam satu layar.</p>
+            </div>
+            <div class="hero-date">
+              <span>Hari ini</span>
+              <b id="heroDate">Kamis, 10 September 2026</b>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card">
+              <div class="stat-icon blue">🏫</div>
+              <div><span>Sekolah penerima</span><strong id="statSchools">12</strong><small>lokasi aktif</small></div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-icon green">👨‍👩‍👧</div>
+              <div><span>Total penerima</span><strong id="statRecipients">3.486</strong><small>porsi hari ini</small></div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-icon orange">🍱</div>
+              <div><span>Porsi disiapkan</span><strong>3.520</strong><small>100% terencana</small></div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-icon purple">📦</div>
+              <div><span>Distribusi</span><strong>12/12</strong><small>sekolah terkirim</small></div>
+            </article>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="card menu-highlight">
+              <div class="card-head">
+                <div>
+                  <span class="label">MENU HARI INI</span>
+                  <h2>Nasi • Ayam • Sayur • Buah</h2>
+                </div>
+                <span class="pill success">Terjadwal</span>
+              </div>
+              <div class="meal-layout">
+                <div class="meal-visual">
+                  <div class="plate">
+                    <div class="food rice">🍚</div>
+                    <div class="food chicken">🍗</div>
+                    <div class="food veg">🥦</div>
+                    <div class="food fruit">🍊</div>
+                  </div>
+                </div>
+                <div class="meal-info">
+                  <div class="meal-row"><span>Karbohidrat</span><b>Nasi putih</b></div>
+                  <div class="meal-row"><span>Protein hewani</span><b>Ayam bumbu kecap</b></div>
+                  <div class="meal-row"><span>Sayuran</span><b>Capcay sayur</b></div>
+                  <div class="meal-row"><span>Buah</span><b>Jeruk</b></div>
+                  <button class="primary-btn" data-go="menu">Lihat detail menu →</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="card nutrition-card">
+              <div class="card-head">
+                <div><span class="label">RINGKASAN GIZI</span><h2>Per porsi</h2></div>
+                <span class="nutrition-score">Baik</span>
+              </div>
+              <div class="macro">
+                <div><span>Energi</span><b>± 650 <small>kkal</small></b></div>
+                <div><span>Protein</span><b>± 28 <small>g</small></b></div>
+                <div><span>Lemak</span><b>± 20 <small>g</small></b></div>
+                <div><span>Karbohidrat</span><b>± 88 <small>g</small></b></div>
+              </div>
+              <div class="progress-wrap"><span>Kelengkapan menu</span><b>92%</b><div class="progress"><i style="width:92%"></i></div></div>
+              <button class="secondary-btn" data-go="nutrition">Buka informasi gizi</button>
+            </article>
+          </div>
+
+          <article class="card">
+            <div class="card-head">
+              <div><span class="label">DISTRIBUSI HARI INI</span><h2>Status sekolah</h2></div>
+              <button class="text-btn" data-go="distribution">Lihat semua →</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Sekolah</th><th>Penerima</th><th>Porsi</th><th>Status</th></tr></thead>
+                <tbody id="dashboardTable"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section id="menu" class="section">
+          <div class="page-heading"><div><span class="eyebrow">MENU HARIAN</span><h1>Menu Makan Bergizi</h1><p>Kelola dan tampilkan menu berdasarkan tanggal.</p></div><input type="date" id="menuDate" value="2026-09-10"></div>
+          <div class="menu-detail-grid">
+            <article class="card big-menu-card">
+              <div class="food-photo">
+                <div class="plate large"><div class="food">🍚</div><div class="food">🍗</div><div class="food">🥦</div><div class="food">🍊</div></div>
+                <span class="photo-tag">MENU #18</span>
+              </div>
+              <div class="menu-copy">
+                <span class="pill blue-pill">KAMIS • 10 SEPTEMBER 2026</span>
+                <h2>Nasi Ayam Bumbu Kecap</h2>
+                <p>Menu seimbang dengan sumber karbohidrat, protein hewani, sayuran, dan buah.</p>
+                <div class="ingredients">
+                  <span>🍚 Nasi putih</span><span>🍗 Ayam kecap</span><span>🥦 Capcay</span><span>🍊 Jeruk</span>
+                </div>
+              </div>
+            </article>
+            <article class="card">
+              <div class="card-head"><div><span class="label">CATATAN DAPUR</span><h2>Persiapan</h2></div></div>
+              <ul class="check-list">
+                <li><span>✓</span> Bahan makanan sudah diterima</li>
+                <li><span>✓</span> Pemeriksaan kualitas bahan</li>
+                <li><span>✓</span> Produksi sesuai jumlah porsi</li>
+                <li><span>✓</span> Pemorsian dan pengiriman</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="schools" class="section">
+          <div class="page-heading"><div><span class="eyebrow">DATA PENERIMA</span><h1>Sekolah & Penerima Manfaat</h1><p>Rekap penerima manfaat per satuan pendidikan.</p></div><button class="primary-btn" id="exportBtn">Export CSV</button></div>
+          <article class="card">
+            <div class="toolbar"><input id="schoolSearch" class="search" placeholder="Cari nama sekolah..."><select id="schoolFilter"><option value="all">Semua status</option><option value="Selesai">Selesai</option><option value="Proses">Proses</option><option value="Menunggu">Menunggu</option></select></div>
+            <div class="table-wrap"><table><thead><tr><th>Sekolah</th><th>Jenjang</th><th>Penerima</th><th>Porsi</th><th>Status</th></tr></thead><tbody id="schoolTable"></tbody></table></div>
+          </article>
+        </section>
+
+        <section id="distribution" class="section">
+          <div class="page-heading"><div><span class="eyebrow">OPERASIONAL</span><h1>Monitoring Distribusi</h1><p>Pantau progres pengiriman dari dapur ke sekolah.</p></div></div>
+          <div class="distribution-cards" id="distributionCards"></div>
+        </section>
+
+        <section id="nutrition" class="section">
+          <div class="page-heading"><div><span class="eyebrow">NUTRISI</span><h1>Informasi Gizi Menu</h1><p>Contoh estimasi nilai gizi per porsi. Sesuaikan dengan perhitungan ahli gizi SPPG.</p></div></div>
+          <div class="nutrition-grid">
+            <article class="card nutrition-big"><span class="label">ENERGI</span><strong>±650</strong><span>kkal / porsi</span><div class="big-progress"><i style="width:82%"></i></div></article>
+            <article class="card nutrition-big"><span class="label">PROTEIN</span><strong>±28</strong><span>gram / porsi</span><div class="big-progress"><i style="width:78%"></i></div></article>
+            <article class="card nutrition-big"><span class="label">KARBOHIDRAT</span><strong>±88</strong><span>gram / porsi</span><div class="big-progress"><i style="width:88%"></i></div></article>
+            <article class="card nutrition-big"><span class="label">LEMAK</span><strong>±20</strong><span>gram / porsi</span><div class="big-progress"><i style="width:60%"></i></div></article>
+          </div>
+        </section>
+
+        <section id="waste" class="section">
+          <div class="page-heading"><div><span class="eyebrow">SUSTAINABILITY</span><h1>Waste Monitoring</h1><p>Catat dan evaluasi sisa makanan untuk meningkatkan efisiensi.</p></div></div>
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-icon green">♻</div><div><span>Total waste</span><strong>18,4 kg</strong><small>hari ini</small></div></article>
+            <article class="stat-card"><div class="stat-icon orange">🍚</div><div><span>Nasi</span><strong>7,2 kg</strong><small>39% dari total</small></div></article>
+            <article class="stat-card"><div class="stat-icon blue">🍗</div><div><span>Lauk</span><strong>5,1 kg</strong><small>28% dari total</small></div></article>
+            <article class="stat-card"><div class="stat-icon purple">🥦</div><div><span>Sayur & buah</span><strong>6,1 kg</strong><small>33% dari total</small></div></article>
+          </div>
+          <article class="card"><div class="card-head"><div><span class="label">TARGET</span><h2>Pengurangan food waste</h2></div><b>↓ 12%</b></div><div class="progress large-progress"><i style="width:72%"></i></div><p class="muted">Target pengurangan 25% dibanding baseline bulan sebelumnya.</p></article>
+        </section>
+
+        <section id="settings" class="section">
+          <div class="page-heading"><div><span class="eyebrow">KONFIGURASI</span><h1>Pengaturan Dashboard</h1><p>Ubah identitas dan data demo langsung dari browser.</p></div></div>
+          <article class="card settings-card">
+            <label>Nama SPPG<input id="sppgName" value="SPPG MBG"></label>
+            <label>Nama Kepala SPPG<input id="headName" value="Aziz Ammar, S.T."></label>
+            <label>Lokasi<input id="location" value="Indonesia"></label>
+            <button class="primary-btn" id="saveSettings">Simpan tampilan</button>
+            <p id="saveMessage" class="save-message"></p>
+          </article>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
