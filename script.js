@@ -1,83 +1,26 @@
-const schools = [
-  {name:"SDN 01 Sukamaju", level:"SD", recipients:320, portions:320, status:"Selesai"},
-  {name:"SDN 02 Sukamaju", level:"SD", recipients:285, portions:290, status:"Selesai"},
-  {name:"SDN 03 Sukamaju", level:"SD", recipients:310, portions:315, status:"Selesai"},
-  {name:"SDN 04 Sukamaju", level:"SD", recipients:264, portions:270, status:"Proses"},
-  {name:"SDN 05 Sukamaju", level:"SD", recipients:301, portions:305, status:"Selesai"},
-  {name:"SMPN 01 Sukamaju", level:"SMP", recipients:410, portions:410, status:"Selesai"},
-  {name:"SMPN 02 Sukamaju", level:"SMP", recipients:356, portions:360, status:"Proses"},
-  {name:"SMPN 03 Sukamaju", level:"SMP", recipients:398, portions:400, status:"Selesai"},
-  {name:"SMAN 01 Sukamaju", level:"SMA", recipients:340, portions:345, status:"Selesai"},
-  {name:"SMKN 01 Sukamaju", level:"SMK", recipients:292, portions:295, status:"Menunggu"},
-  {name:"TK Aisyiyah 01", level:"TK", recipients:160, portions:160, status:"Selesai"},
-  {name:"TK Aisyiyah 02", level:"TK", recipients:350, portions:360, status:"Proses"}
-];
-
-const $ = s => document.querySelector(s);
-const $$ = s => document.querySelectorAll(s);
-
-function statusClass(status){
-  return status === "Selesai" ? "done" : status === "Proses" ? "process" : "wait";
-}
-function schoolRow(s){
-  return `<tr><td><b>${s.name}</b></td><td>${s.level}</td><td>${s.recipients.toLocaleString("id-ID")}</td><td>${s.portions.toLocaleString("id-ID")}</td><td><span class="status ${statusClass(s.status)}">${s.status}</span></td></tr>`;
-}
-function renderTables(){
-  $("#dashboardTable").innerHTML = schools.slice(0,6).map(schoolRow).join("");
-  renderSchoolTable();
-}
-function renderSchoolTable(){
-  const q = ($("#schoolSearch")?.value || "").toLowerCase();
-  const filter = $("#schoolFilter")?.value || "all";
-  const rows = schools.filter(s => s.name.toLowerCase().includes(q) && (filter==="all" || s.status===filter));
-  $("#schoolTable").innerHTML = rows.length ? rows.map(schoolRow).join("") : `<tr><td colspan="5">Tidak ada data.</td></tr>`;
-}
-function renderDistribution(){
-  $("#distributionCards").innerHTML = schools.map((s,i) => `
-    <article class="distribution-card">
-      <span class="label">${s.level}</span>
-      <h3>${s.name}</h3>
-      <p>${s.recipients.toLocaleString("id-ID")} penerima • ${s.portions.toLocaleString("id-ID")} porsi</p>
-      <div class="route"><span>Progres pengiriman</span><b>${s.status==="Selesai"?100:s.status==="Proses"?65:10}%</b></div>
-      <div class="progress"><i style="width:${s.status==="Selesai"?100:s.status==="Proses"?65:10}%"></i></div>
-    </article>`).join("");
-}
-
-function showSection(id){
-  $$(".section").forEach(x=>x.classList.remove("active-section"));
-  $(`#${id}`).classList.add("active-section");
-  $$(".nav-item").forEach(x=>x.classList.toggle("active", x.dataset.section===id));
-  $("#sidebar").classList.remove("open");
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-$$(".nav-item").forEach(btn => btn.addEventListener("click",()=>showSection(btn.dataset.section)));
-$$("[data-go]").forEach(btn => btn.addEventListener("click",()=>showSection(btn.dataset.go)));
-
-$("#menuBtn").addEventListener("click",()=>$("#sidebar").classList.toggle("open"));
-$("#schoolSearch").addEventListener("input",renderSchoolTable);
-$("#schoolFilter").addEventListener("change",renderSchoolTable);
-
-$("#exportBtn").addEventListener("click",()=>{
-  const header = "Sekolah,Jenjang,Penerima,Porsi,Status\n";
-  const body = schools.map(s=>[s.name,s.level,s.recipients,s.portions,s.status].join(",")).join("\n");
-  const blob = new Blob([header+body],{type:"text/csv;charset=utf-8;"});
-  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="data-penerima-sppg.csv"; a.click(); URL.revokeObjectURL(a.href);
-});
-
-$("#saveSettings").addEventListener("click",()=>{
-  localStorage.setItem("sppgName",$("#sppgName").value);
-  localStorage.setItem("headName",$("#headName").value);
-  localStorage.setItem("location",$("#location").value);
-  $("#saveMessage").textContent="✓ Pengaturan tersimpan di browser ini.";
-});
-
-["sppgName","headName","location"].forEach(id=>{
-  const saved=localStorage.getItem(id);
-  if(saved) $("#"+id).value=saved;
-});
-
-const now = new Date();
-$("#todayChip").textContent = now.toLocaleDateString("id-ID",{day:"2-digit",month:"short",year:"numeric"});
-
-renderTables();
-renderDistribution();
+const K='sppg_tambakreja_v3';
+const seed={name:'SPPG Tambakreja',head:'Aziz Ammar, S.T.',loc:'Tambakreja',schools:[
+['SDN 01 Tambakreja','SD',320],['SDN 02 Tambakreja','SD',285],['SDN 03 Tambakreja','SD',310],['SDN 04 Tambakreja','SD',264],['SDN 05 Tambakreja','SD',301],['SMPN 01 Tambakreja','SMP',410],['SMPN 02 Tambakreja','SMP',356],['SMPN 03 Tambakreja','SMP',398],['SMAN 01 Tambakreja','SMA',340],['SMKN 01 Tambakreja','SMK',292],['TK Aisyiyah 01','TK',160],['TK Aisyiyah 02','TK',350]],
+menus:{'2026-09-10':{title:'Nasi Ayam Bumbu Kecap',carb:'Nasi putih',protein:'Ayam bumbu kecap',veg:'Capcay sayur',fruit:'Jeruk',energy:650,pgram:28,cgram:88,fat:20}}};
+let d=JSON.parse(localStorage.getItem(K)||'null')||seed;
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s),fmt=n=>Number(n||0).toLocaleString('id-ID'),iso=()=>new Date().toISOString().slice(0,10),dl=x=>new Date(x+'T00:00:00').toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
+function save(){localStorage.setItem(K,JSON.stringify(d))}
+function menuFor(date){return d.menus[date]||{}}
+function dashboard(){const r=d.schools.reduce((a,x)=>a+x[2],0);$('#stats').innerHTML=[['🏫','Sekolah penerima',d.schools.length,'lokasi aktif'],['👨‍👩‍👧','Total penerima',fmt(r),'penerima hari ini']].map(x=>`<div class="stat"><span class="ico">${x[0]}</span><div><span>${x[1]}</span><b>${x[2]}</b><small>${x[3]}</small></div></div>`).join('');const m=menuFor(iso());$('#dtitle').textContent=m.title||'Belum ada menu';$('#dmenu').innerHTML=[['Karbohidrat',m.carb],['Protein',m.protein],['Sayur',m.veg],['Buah',m.fruit]].filter(x=>x[1]).map(x=>`<div class="menu-line"><span>${x[0]}</span><b>${x[1]}</b></div>`).join('');$('#dnut').innerHTML=[['Energi',m.energy,'kkal'],['Protein',m.pgram,'g'],['Karbohidrat',m.cgram,'g'],['Lemak',m.fat,'g']].map(x=>`<div><span>${x[0]}</span><b>± ${x[1]||0} <small>${x[2]}</small></b></div>`).join('');$('#drows').innerHTML=d.schools.slice(0,8).map(x=>`<tr><td><b>${x[0]}</b></td><td>${x[1]}</td><td>${fmt(x[2])}</td></tr>`).join('')}
+function renderMenu(){const m=menuFor($('#mdate').value);$('#mtitle').value=m.title||'';$('#mcarb').value=m.carb||'';$('#mprotein').value=m.protein||'';$('#mveg').value=m.veg||'';$('#mfruit').value=m.fruit||'';$('#energy').value=m.energy??650;$('#pgram').value=m.pgram??28;$('#cgram').value=m.cgram??88;$('#fat').value=m.fat??20;$('#menuNut').innerHTML=[['Energi',m.energy,'kkal'],['Protein',m.pgram,'g'],['Karbohidrat',m.cgram,'g'],['Lemak',m.fat,'g']].map(x=>`<div><span>${x[0]}</span><b>± ${x[1]||0} <small>${x[2]}</small></b></div>`).join('');$('#items').innerHTML=[m.carb,m.protein,m.veg,m.fruit].filter(Boolean).map(x=>`<span class="item">${x}</span>`).join('');$('#history').innerHTML=Object.entries(d.menus).sort().reverse().map(([k,v])=>`<tr><td>${dl(k)}</td><td><b>${v.title||'-'}</b></td><td>${[v.carb,v.protein,v.veg,v.fruit].filter(Boolean).join(' • ')}</td><td><button class="action" onclick="editMenu('${k}')">Pilih</button></td></tr>`).join('')||'<tr><td colspan="4">Belum ada menu.</td></tr>'}
+window.editMenu=k=>{$('#mdate').value=k;renderMenu();show('menu')};
+function schools(){const q=$('#search').value.toLowerCase();const a=d.schools.map((x,i)=>[x,i]).filter(y=>y[0][0].toLowerCase().includes(q));$('#rows').innerHTML=a.map(y=>`<tr><td><b>${y[0][0]}</b></td><td>${y[0][1]}</td><td>${fmt(y[0][2])}</td><td><button class="action" onclick="editSchool(${y[1]})">Edit</button><button class="action delete" onclick="delSchool(${y[1]})">Hapus</button></td></tr>`).join('')||'<tr><td colspan="4">Tidak ada data.</td></tr>'}
+window.editSchool=i=>{const x=d.schools[i];$('#modal').classList.remove('hidden');$('#modal').dataset.i=i;$('#modalTitle').textContent='Edit sekolah';$('#fn').value=x[0];$('#fl').value=x[1];$('#fr').value=x[2]};window.delSchool=i=>{if(confirm('Hapus sekolah ini?')){d.schools.splice(i,1);save();all()}};
+function nutrition(){const m=menuFor($('#ndate').value||iso());$('#nutMenuTitle').textContent=m.title||'Belum ada menu';$('#nutgrid').innerHTML=[['ENERGI',m.energy||0,'kkal'],['PROTEIN',m.pgram||0,'g'],['KARBOHIDRAT',m.cgram||0,'g'],['LEMAK',m.fat||0,'g']].map(x=>`<article class="card nut"><label>${x[0]}</label><strong>± ${x[1]}</strong><small>${x[2]} / porsi</small></article>`).join('');$('#nutItems').innerHTML=[m.carb,m.protein,m.veg,m.fruit].filter(Boolean).map(x=>`<span class="item">${x}</span>`).join('')||'<span class="item">Belum ada komponen menu.</span>'}
+function settings(){$('#sname').value=d.name;$('#head').value=d.head;$('#loc').value=d.loc;$('#brandName').textContent=d.name;$('#heroName').textContent=d.name}
+function show(id){$$('.page').forEach(x=>x.classList.toggle('active',x.id===id));$$('.nav').forEach(x=>x.classList.toggle('active',x.dataset.page===id));$('#side').classList.remove('open');if(id==='menu')renderMenu();if(id==='schools')schools();if(id==='nutrition')nutrition();if(id==='settings')settings();window.scrollTo(0,0)}
+function all(){dashboard();schools();renderMenu();nutrition();settings()}
+$$('.nav').forEach(x=>x.onclick=()=>show(x.dataset.page));$$('[data-go]').forEach(x=>x.onclick=()=>show(x.dataset.go));$('#hamb').onclick=()=>$('#side').classList.toggle('open');
+$('#mdate').value=iso();$('#ndate').value=iso();$('#date').textContent=new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});$('#heroDate').textContent=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+$('#mdate').onchange=renderMenu;$('#ndate').onchange=nutrition;
+$('#saveMenu').onclick=()=>{const k=$('#mdate').value;d.menus[k]={title:$('#mtitle').value.trim(),carb:$('#mcarb').value.trim(),protein:$('#mprotein').value.trim(),veg:$('#mveg').value.trim(),fruit:$('#mfruit').value.trim(),energy:+$('#energy').value,pgram:+$('#pgram').value,cgram:+$('#cgram').value,fat:+$('#fat').value};save();$('#mmsg').textContent='✓ Menu dan informasi gizi tersimpan.';renderMenu();dashboard();nutrition()};
+$('#search').oninput=schools;$('#add').onclick=()=>{$('#modal').dataset.i='';$('#modalTitle').textContent='Tambah sekolah';$('#fn').value='';$('#fl').value='SD';$('#fr').value=0;$('#modal').classList.remove('hidden')};$('#close').onclick=()=>$('#modal').classList.add('hidden');
+$('#saveSchool').onclick=()=>{const i=$('#modal').dataset.i,x=[$('#fn').value.trim(),$('#fl').value.trim()||'SD',+$('#fr').value||0];if(!x[0])return alert('Nama sekolah wajib diisi.');if(i==='')d.schools.push(x);else d.schools[+i]=x;save();$('#modal').classList.add('hidden');all()};
+$('#csv').onclick=()=>{const c='Sekolah,Jenjang,Jumlah Penerima Manfaat\n'+d.schools.map(x=>`"${x[0].replaceAll('"','""')}",${x[1]},${x[2]}`).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv;charset=utf-8'}));a.download='data-penerima-sppg.csv';a.click()};
+$('#saveSet').onclick=()=>{d.name=$('#sname').value.trim()||'SPPG Tambakreja';d.head=$('#head').value.trim();d.loc=$('#loc').value.trim();save();settings();$('#smsg').textContent='✓ Pengaturan tersimpan.'};
+all();
